@@ -72,7 +72,8 @@ public class AddFragment extends Fragment {
             public void onClick(View v) {
                 //go back latest screen
                 /*Navigation.findNavController(v).navigateUp();*/
-                Navigation.findNavController(v).navigate(R.id.fragment_home);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -97,7 +98,7 @@ public class AddFragment extends Fragment {
                 transaction.put("note",note);
                 transaction.put("type",type);
 
-                fStore.collection("Transaction")
+                 fStore.collection("Transaction")
                         .document(firebaseAuth.getUid())
                         .collection("Notes")
                         .document(id)
