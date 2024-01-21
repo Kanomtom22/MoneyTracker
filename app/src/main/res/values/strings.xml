@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">MONEY TRACKER</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_history">History</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_add">Add</string>
+    <string name="DASHBOARD">DASHBOARD</string>
+    <string name="HISTORY">HISTORY</string>
+    <string name="SETTING">SETTING</string>
+    <string name="ADD">ADD TRANSACTION</string>
+    <string name="CANCEL">CANCEL</string>
+    <string name="SAVE">SAVE</string>
+    <string name="SIGNUP">SIGN UP</string>
+
+    <string name="Account">Account</string>
+    <string name="Categories">Categories</string>
+    <string name="Languages">Languages</string>
+    <string name="Logout">Logout</string>
+
+    <string name="NOVEMBER">N O V E M B E R</string>
+    <string name="nov">N O V</string>
+    <string name="total_baht">฿ 4,836</string>
+    <string name="total_income">฿ 5,000</string>
+    <string name="total_expenses">฿ 164</string>
+
+    <string name="total_balance">Total Balance</string>
+    <string name="income">income</string>
+    <string name="expenses">expenses</string>
+    <string name="INCOME">INCOME</string>
+    <string name="TOTAL">TOTAL</string>
+    <string name="EXPENSES">EXPENSES</string>
+    <string name="BALANCE">BALANCE</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="category_spinner">
+        <item>Food</item>
+        <item>Grocery</item>
+        <item>Shopping</item>
+        <item>Transportation</item>
+        <item>Monthly paid</item>
+        <item>Travel</item>
+    </string-array>
+
+
+</resources>

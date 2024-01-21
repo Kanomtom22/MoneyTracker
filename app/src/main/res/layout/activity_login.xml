@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:id="@+id/activity_login"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="35sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="@string/app_name" />
+
+        <EditText
+            android:id="@+id/emaillogin"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:background="@drawable/boxbg"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:hint="email" />
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword"
+            android:layout_gravity="center"
+            android:background="@drawable/boxbg"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"
+            android:hint="password" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/btn"
+            android:text="LOGIN" />
+
+        <TextView
+            android:id="@+id/goToSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="15sp"
+            android:textColor="@color/darkgray"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:text="Create New Account" />
+    </LinearLayout>
+</FrameLayout>
