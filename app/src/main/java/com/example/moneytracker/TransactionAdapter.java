@@ -1,6 +1,8 @@
 package com.example.moneytracker;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +30,17 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TransactionAdapter.MyViewHolder holder, int position) {
         TransactionModel model = transactionModelArrayList.get(position);
-        model.getType();
+        String priority = model.getType();
+        if (priority.equals("Expenses")) {
+            holder.amount.setTextColor(context.getResources().getColor(R.color.pink));
+            holder.bath.setTextColor(context.getResources().getColor(R.color.pink));
+        }
+        else {
+            holder.amount.setTextColor(context.getResources().getColor(R.color.sky));
+            holder.bath.setTextColor(context.getResources().getColor(R.color.sky));
+        }
         holder.amount.setText(model.getAmount());
         holder.note.setText(model.getNote());
     }
@@ -41,11 +51,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView note,amount;
+        TextView note,amount,date,bath;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             note = itemView.findViewById(R.id.note_one);
             amount = itemView.findViewById(R.id.amount_one);
+            date = itemView.findViewById(R.id.date_one);
+            bath = itemView.findViewById(R.id.bath);
         }
     }
 }

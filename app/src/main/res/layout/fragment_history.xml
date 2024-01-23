@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
+    android:layout_marginBottom="60dp"
     tools:context=".HistoryFragment">
 
     <LinearLayout
@@ -12,15 +13,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/history_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="20dp"
-            android:text="@string/HISTORY"
-            android:textColor="@color/darkgray"
-            android:textSize="15sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/history_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/HISTORY"
+                android:textColor="@color/darkgray"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,12 +100,21 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/incomeBath_history"
+                        android:id="@+id/totalIncome_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="฿5,000"
+                        android:text=""
+                        android:textColor="@color/sky"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/bath1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bath"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/sky"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -118,12 +138,22 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/expenseBath_history"
+                        android:id="@+id/totalExpense_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="฿164"
+                        android:text=""
+                        android:textColor="@color/pink"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/bath2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bath"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/pink"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -146,12 +176,21 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/balanceBath_history"
+                        android:id="@+id/totalBalance_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="฿4,836"
+                        android:text=""
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/bath3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bath"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/yellow"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -161,8 +200,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView

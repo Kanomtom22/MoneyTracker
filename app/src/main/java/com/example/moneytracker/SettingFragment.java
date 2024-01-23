@@ -1,5 +1,6 @@
 package com.example.moneytracker;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ public class SettingFragment extends Fragment {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
         binding.categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,4 +34,5 @@ public class SettingFragment extends Fragment {
 
 
     }
+
 }
