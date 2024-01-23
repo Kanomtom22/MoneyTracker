@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     tools:context=".CategoryActivity">
 
     <LinearLayout
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categories"
             android:gravity="center"
-            android:paddingTop="40dp"
+            android:paddingTop="20dp"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -26,12 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginRight="15dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name : "
+                android:text="New Category : "
                 android:layout_marginHorizontal="15dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:background="@drawable/btn"
+                android:backgroundTint="@color/sky"
                 android:text="Add"
                 android:textSize="16sp"
                 android:layout_marginEnd="16dp" />
@@ -72,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn"
                 android:textColor="@color/white"
+                android:backgroundTint="@color/red"
                 android:text="Delete"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp" />
