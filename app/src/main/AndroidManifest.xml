@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MoneyTracker"
         tools:targetApi="31">
         <activity
+            android:name=".ResetPwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryActivity"
             android:exported="false" />
         <activity
@@ -33,7 +39,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String EXTRA_TEXT = "";
     ActivityLoginBinding binding;
     FirebaseAuth firebaseAuth;
 
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = binding.emaillogin.getText().toString().trim();
                 String password = binding.passwordLogin.getText().toString().trim();
+
                 if (email.length()<=0 || password.length()<=0) {
                     return;
                 }
@@ -54,7 +56,25 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
                                 Toast.makeText(LoginActivity.this, "Sign in success", Toast.LENGTH_SHORT).show();
                                 //if login success go to home screen
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                                // Now, create an Intent for the AccountActivity
+                                Intent accountIntent = new Intent(LoginActivity.this, AccountActivity.class);
+
+                                // Pass the email as an extra to the AccountActivity
+                                Bundle extras = new Bundle();
+                                extras.putString("EXTRA_TEXT", email);
+                                accountIntent.putExtras(extras);
+
+                                // Start the AccountActivity
+                                startActivity(accountIntent);
+                                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+
+                                // Start the MainActivity
+                                startActivity(mainIntent);
+
+
+                                // Finish the LoginActivity if needed
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
