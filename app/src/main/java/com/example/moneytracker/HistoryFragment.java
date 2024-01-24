@@ -1,9 +1,11 @@
 package com.example.moneytracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -25,6 +27,8 @@ public class HistoryFragment extends Fragment {
     FragmentHistoryBinding binding;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
+    int sumExpenses=0;
+    int sumIncome=0;
     ArrayList<TransactionModel> transactionModelArrayList;
     TransactionAdapter transactionAdapter;
     @Override
@@ -41,14 +45,15 @@ public class HistoryFragment extends Fragment {
         binding.historyRecycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.historyRecycleView.setHasFixedSize(true);
 
-
         loadData();
         return view;
 
     }
 
     private void loadData() {
-        firebaseFirestore.collection("Transaction").document(firebaseAuth.getUid()).collection("Notes")
+        firebaseFirestore.collection("Transaction")
+                .document(firebaseAuth.getUid())
+                .collection("Notes")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -58,8 +63,19 @@ public class HistoryFragment extends Fragment {
                                     ds.getString("note"),
                                     ds.getString("amount"),
                                     ds.getString("type"));
+
+                            int amount=Integer.parseInt(ds.getString("amount"));
+                            if (ds.getString("type").equals("Expenses")) {
+                                sumExpenses = sumExpenses + amount;
+                            }
+                            else {
+                                sumIncome = sumIncome + amount;
+                            }
                             transactionModelArrayList.add(model);
                         }
+                        binding.totalIncomeHistory.setText(String.valueOf(sumIncome));
+                        binding.totalExpenseHistory.setText(String.valueOf(sumExpenses));
+                        binding.totalBalanceHistory.setText(String.valueOf(sumIncome-sumExpenses));
 
                         transactionAdapter = new TransactionAdapter(getActivity(),transactionModelArrayList);
                         binding.historyRecycleView.setAdapter(transactionAdapter);
