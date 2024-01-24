@@ -23,7 +23,7 @@
     <string name="total_baht">฿ 4,836</string>
     <string name="total_income">฿ 5,000</string>
     <string name="total_expenses">฿ 164</string>
-``
+    ``
     <string name="total_balance">Total Balance</string>
     <string name="income">income</string>
     <string name="expenses">expenses</string>
