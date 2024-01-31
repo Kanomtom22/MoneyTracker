@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/date_one"
-                android:text="24/1/2023"
+                android:text=""
                 android:textSize="15sp"
                 android:textColor="@color/black"
                 android:paddingLeft="20dp"
