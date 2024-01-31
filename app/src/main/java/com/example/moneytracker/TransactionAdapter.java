@@ -43,6 +43,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
         holder.amount.setText(model.getAmount());
         holder.note.setText(model.getNote());
+        holder.date.setText(model.getDate());
     }
 
     @Override
@@ -58,6 +59,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             amount = itemView.findViewById(R.id.amount_one);
             date = itemView.findViewById(R.id.date_one);
             bath = itemView.findViewById(R.id.bath);
+
         }
     }
 }

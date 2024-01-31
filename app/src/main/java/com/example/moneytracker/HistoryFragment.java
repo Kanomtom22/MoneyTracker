@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -54,6 +55,8 @@ public class HistoryFragment extends Fragment {
         firebaseFirestore.collection("Transaction")
                 .document(firebaseAuth.getUid())
                 .collection("Notes")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -62,7 +65,9 @@ public class HistoryFragment extends Fragment {
                                     ds.getString("id"),
                                     ds.getString("note"),
                                     ds.getString("amount"),
-                                    ds.getString("type"));
+                                    ds.getString("type"),
+                                    ds.getString("date"));
+
 
                             int amount=Integer.parseInt(ds.getString("amount"));
                             if (ds.getString("type").equals("Expenses")) {

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.example.moneytracker.databinding.FragmentAddBinding;
@@ -27,15 +28,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,7 +50,7 @@ public class AddFragment extends Fragment {
     FirebaseFirestore fStore;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    String type="";
+    String type="",currentDate;
     ArrayAdapter<String> adapter;
     ArrayList<String> spinnerList;
 
@@ -88,12 +94,28 @@ public class AddFragment extends Fragment {
             }
         });
 
+        binding.calendarTransaction.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.set(year, month, dayOfMonth);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                currentDate = sdf.format(selectedDate.getTime());
+
+            }
+        });
+
+
         binding.saveTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount = binding.amountTransaction.getText().toString().trim();
                 String note = binding.noteTransaction.getText().toString().trim();
                 String category = binding.categorySpinner.getSelectedItem().toString();
+
+
 
                 if (amount.length() <=0 ) {
                     return;
@@ -110,6 +132,8 @@ public class AddFragment extends Fragment {
                 transaction.put("note",note);
                 transaction.put("type",type);
                 transaction.put("category", category);
+                transaction.put("date", currentDate);
+                transaction.put("timestamp", FieldValue.serverTimestamp());
 
                  fStore.collection("Transaction")
                         .document(firebaseAuth.getUid())
@@ -122,6 +146,7 @@ public class AddFragment extends Fragment {
                                 Toast.makeText(getContext(), "Added new transaction", Toast.LENGTH_SHORT).show();
                                 binding.noteTransaction.setText("");
                                 binding.amountTransaction.setText("");
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
