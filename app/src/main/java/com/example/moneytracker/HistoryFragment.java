@@ -56,6 +56,7 @@ public class HistoryFragment extends Fragment {
                 .document(firebaseAuth.getUid())
                 .collection("Notes")
                 .orderBy("date", Query.Direction.DESCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

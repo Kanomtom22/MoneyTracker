@@ -133,6 +133,7 @@ public class AddFragment extends Fragment {
                 transaction.put("type",type);
                 transaction.put("category", category);
                 transaction.put("date", currentDate);
+                transaction.put("timestamp", FieldValue.serverTimestamp());
 
                  fStore.collection("Transaction")
                         .document(firebaseAuth.getUid())
