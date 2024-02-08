@@ -5,10 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.moneytracker.databinding.FragmentHistoryBinding;
 import com.example.moneytracker.databinding.FragmentHomeBinding;
@@ -25,13 +28,15 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class HomeFragment extends Fragment {
+    private RecyclerView incomeRecyclerView, expenseRecyclerView;
+    private TransactionAdapter incomeAdapter, expenseAdapter;
+    private ArrayList<TransactionModel> incomeList, expenseList;
     FragmentHomeBinding binding;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     int sumExpenses=0;
     int sumIncome=0;
     ArrayList<TransactionModel> transactionModelArrayList;
-    TransactionAdapter transactionAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +49,21 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
         transactionModelArrayList = new ArrayList<>();
+
+        incomeList = new ArrayList<>();
+        expenseList = new ArrayList<>();
+
+        incomeRecyclerView  = binding.incomeList;
+        expenseRecyclerView  = binding.expenseList;
+
+        incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        expenseRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        incomeAdapter = new TransactionAdapter(getActivity(), incomeList);
+        expenseAdapter = new TransactionAdapter(getActivity(), expenseList);
+
+        incomeRecyclerView.setAdapter(incomeAdapter);
+        expenseRecyclerView.setAdapter(expenseAdapter);
 
         loadData();
         return view;
@@ -70,18 +90,21 @@ public class HomeFragment extends Fragment {
                             int amount = Integer.parseInt(ds.getString("amount"));
                             if (ds.getString("type").equals("Expenses")) {
                                 sumExpenses = sumExpenses + amount;
+                                expenseList.add(model);
                             } else {
                                 sumIncome = sumIncome + amount;
+                                incomeList.add(model);
                             }
                             transactionModelArrayList.add(model);
                         }
 
+                        incomeAdapter.notifyDataSetChanged();
+                        expenseAdapter.notifyDataSetChanged();
 
                         binding.totalIncome.setText("฿" + String.valueOf(sumIncome));
                         binding.totalExpenses.setText("฿" +String.valueOf(sumExpenses));
                         binding.totalBaht.setText("฿" +String.valueOf(sumIncome - sumExpenses));
 
-                        transactionAdapter = new TransactionAdapter(getActivity(), transactionModelArrayList);
                     }
 
                 });

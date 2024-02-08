@@ -57,9 +57,15 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
+
             return true;
 
         });
+    }
+
+    protected void onResume() {
+        super.onResume();
+        updateNavigationBarLanguage();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -75,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
         String titleHistory = getString(R.string.title_history);
         String titleSetting = getString(R.string.title_setting);
 
-
+        binding.bottomNavigationView.getMenu().findItem(R.id.navigation_home).setTitle(titleHome);
+        binding.bottomNavigationView.getMenu().findItem(R.id.navigation_dashboard).setTitle(titleDashboard);
+        binding.bottomNavigationView.getMenu().findItem(R.id.navigation_history).setTitle(titleHistory);
+        binding.bottomNavigationView.getMenu().findItem(R.id.navigation_setting).setTitle(titleSetting);
     }
 
 

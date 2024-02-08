@@ -27,7 +27,7 @@ public class LanguagesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setLanguage("en");
-                restartActivity();
+                restartActivity("en");
             }
         });
 
@@ -35,7 +35,7 @@ public class LanguagesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setLanguage("th");
-                restartActivity();
+                restartActivity("th");
             }
         });
     }
@@ -49,10 +49,11 @@ public class LanguagesActivity extends AppCompatActivity {
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 
-    private void restartActivity() {
-        Intent intent = getIntent();
-        finish();
+    private void restartActivity(String languageCode) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("language_code", languageCode);
         startActivity(intent);
+        finish();
     }
 
     protected void onResume() {

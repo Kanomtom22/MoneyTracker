@@ -18,8 +18,8 @@
     <string name="Languages">Languages</string>
     <string name="Logout">Logout</string>
 
-    <string name="NOVEMBER">N O V E M B E R</string>
-    <string name="nov">N O V</string>
+    <string name="NOVEMBER">F E B R U A R Y</string>
+    <string name="nov">F E B</string>
     <string name="total_baht">฿ 4,836</string>
     <string name="total_income">฿ 5,000</string>
     <string name="total_expenses">฿ 164</string>
@@ -35,6 +35,9 @@
 
     <string name="selectDate">select date</string>
     <string name="selectTime">select time</string>
+    <string name="NewCat">New Category : </string>
+    <string name="Delete">Delete</string>
+    <string name="Mycat">My categories</string>
 
     <string name="English">English</string>
     <string name="Thai">Thai</string>

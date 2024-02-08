@@ -18,13 +18,16 @@
     <string name="Languages">ภาษา</string>
     <string name="Logout">ออกจากระบบ</string>
     <string name="Note">จดบันทึก</string>
+    <string name="NewCat">เพิ่มประเภท : </string>
+    <string name="Delete">ลบ</string>
+    <string name="Mycat">ประเภทของฉัน</string>
 
     <string name="selectDate">เลือกวันที่</string>
     <string name="selectTime">เลือกเวลา</string>
 
 
-    <string name="NOVEMBER">พฤศจิกายน</string>
-    <string name="nov">พฤศจิกายน</string>
+    <string name="NOVEMBER">กุมภาพันธ์</string>
+    <string name="nov">กุมภาพันธ์</string>
 
 
     <string name="total_baht">฿ 4,836</string>
