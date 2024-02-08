@@ -37,13 +37,13 @@ public class SettingFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        binding.accountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AccountActivity.class);
-                startActivity(intent);
-            }
-        });
+//        binding.accountButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), AccountActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
 

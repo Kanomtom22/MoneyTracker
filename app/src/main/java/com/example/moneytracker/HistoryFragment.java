@@ -23,6 +23,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HistoryFragment extends Fragment {
     FragmentHistoryBinding binding;
@@ -56,11 +58,11 @@ public class HistoryFragment extends Fragment {
                 .document(firebaseAuth.getUid())
                 .collection("Notes")
                 .orderBy("date", Query.Direction.DESCENDING)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot ds:task.getResult()) {
+                        for (DocumentSnapshot ds : task.getResult()) {
                             TransactionModel model = new TransactionModel(
                                     ds.getString("id"),
                                     ds.getString("note"),
@@ -69,22 +71,40 @@ public class HistoryFragment extends Fragment {
                                     ds.getString("date"));
 
 
-                            int amount=Integer.parseInt(ds.getString("amount"));
+                            int amount = Integer.parseInt(ds.getString("amount"));
                             if (ds.getString("type").equals("Expenses")) {
                                 sumExpenses = sumExpenses + amount;
-                            }
-                            else {
+                            } else {
                                 sumIncome = sumIncome + amount;
                             }
                             transactionModelArrayList.add(model);
                         }
+
+
                         binding.totalIncomeHistory.setText(String.valueOf(sumIncome));
                         binding.totalExpenseHistory.setText(String.valueOf(sumExpenses));
-                        binding.totalBalanceHistory.setText(String.valueOf(sumIncome-sumExpenses));
+                        binding.totalBalanceHistory.setText(String.valueOf(sumIncome - sumExpenses));
 
-                        transactionAdapter = new TransactionAdapter(getActivity(),transactionModelArrayList);
+                        transactionAdapter = new TransactionAdapter(getActivity(), transactionModelArrayList);
                         binding.historyRecycleView.setAdapter(transactionAdapter);
                     }
+
                 });
+
+        Collections.sort(transactionModelArrayList, new Comparator<TransactionModel>() {
+            @Override
+            public int compare(TransactionModel model1, TransactionModel model2) {
+                // เปรียบเทียบค่า "date"
+                int dateComparison = model2.getDate().compareTo(model1.getDate());
+
+                // ถ้า "date" เท่ากัน ให้เปรียบเทียบ "timestamp"
+                if (dateComparison == 0) {
+                    return dateComparison;
+//                    return model2.getTimestamp().compareTo(model1.getTimestamp());
+                } else {
+                    return dateComparison;
+                }
+            }
+        });
     }
 }
