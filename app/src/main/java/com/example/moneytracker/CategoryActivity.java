@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,28 +39,59 @@ import java.util.Map;
 public class CategoryActivity extends AppCompatActivity {
     private EditText editText;
     private Button addButton, deleteButton;
-    private ListView listView;
-    private ArrayList<String> categoryList;
-    private ArrayAdapter<String> adapter;
+    private ListView list1, list2;
+    private String type="";
+    private RadioButton incomeTransaction, expensesTransaction;
+    private ArrayList<String> incomeList, expensesList;
+    private ArrayAdapter<String> incomeAdapter, expensesAdapter;
     private FirebaseFirestore fStore;
     private FirebaseAuth firebaseAuth;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        incomeTransaction = findViewById(R.id.income_transaction);
+        expensesTransaction = findViewById(R.id.expenses_transaction);
         editText = findViewById(R.id.editText);
         addButton = findViewById(R.id.button);
         deleteButton = findViewById(R.id.button2);
-        listView = findViewById(R.id.list1);
+        list1 = findViewById(R.id.list1);
+        list2 = findViewById(R.id.list2);
 
         fStore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        categoryList = new ArrayList<>();
+        /*categoryList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryList);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
+
+        incomeList = new ArrayList<>();
+        expensesList = new ArrayList<>();
+        incomeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, incomeList);
+        expensesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expensesList);
+        list1.setAdapter(incomeAdapter);
+        list2.setAdapter(expensesAdapter);
+
+        incomeTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = "Income";
+                incomeTransaction.setChecked(true);
+                expensesTransaction.setChecked(false);
+            }
+        });
+
+        expensesTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = "Expenses";
+                expensesTransaction.setChecked(true);
+                incomeTransaction.setChecked(false);
+            }
+        });
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -97,6 +131,7 @@ public class CategoryActivity extends AppCompatActivity {
                                 } else {
                                     Map<String, Object> data = new HashMap<>();
                                     data.put("category", category);
+                                    data.put("type", type);
                                     data.put("timestamp", FieldValue.serverTimestamp());
 
                                     fStore.collection("Transaction")
@@ -207,22 +242,39 @@ public class CategoryActivity extends AppCompatActivity {
     private void showData() {
         fStore.collection("Transaction").document(firebaseAuth.getUid())
                 .collection("Category")
-                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        categoryList.clear();
-                        categoryList.add("Food");
-                        categoryList.add("Shopping");
-                        categoryList.add("Transportation");
-                        categoryList.add("Monthly Payment");
+
+                        incomeList.clear();
+
+                        expensesList.clear();
+
 
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             String value = document.getString("category");
-                            categoryList.add(value);
+                            String type = document.getString("type");
+                            if (type != null && type.equals("Income")) {
+                                incomeList.add(value);
+                            } else if (type != null && type.equals("Expenses")) {
+                                expensesList.add(value);
+                            }
                         }
-                        adapter.notifyDataSetChanged();
+
+                        incomeList.add("Salary");
+                        incomeList.add("Extra");
+                        expensesList.add("Food");
+                        expensesList.add("Shopping");
+                        expensesList.add("Transportation");
+                        expensesList.add("Monthly Payment");
+
+                        incomeAdapter.notifyDataSetChanged();
+                        expensesAdapter.notifyDataSetChanged();
+
+
                     }
+
                 });
     }
 }
