@@ -57,8 +57,7 @@ public class AddFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     String type="",currentDate, selectedDate, currentTime, selectedTime;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> spinnerList;
+    ArrayAdapter<String> adapter,incomeAdapter, expensesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +77,7 @@ public class AddFragment extends Fragment {
                 type = "Income";
                 binding.incomeTransaction.setChecked(true);
                 binding.expensesTransaction.setChecked(false);
+                showData();
             }
         });
 
@@ -87,6 +87,7 @@ public class AddFragment extends Fragment {
                 type = "Expenses";
                 binding.expensesTransaction.setChecked(true);
                 binding.incomeTransaction.setChecked(false);
+                showData();
             }
         });
 
@@ -150,19 +151,6 @@ public class AddFragment extends Fragment {
             }
         });
 
-        /* binding.calendarTransaction.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar selectedDate = Calendar.getInstance();
-                selectedDate.set(year, month, dayOfMonth);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                currentDate = sdf.format(selectedDate.getTime());
-
-            }
-        });*/
-
         //Select Date
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -204,50 +192,44 @@ public class AddFragment extends Fragment {
             }
         });
 
-        CollectionReference collRef = fStore.collection("Transaction")
-                .document(firebaseAuth.getUid())
-                .collection("Category");
-
-            collRef.orderBy("timestamp", Query.Direction.ASCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                    if (error != null) {
-                        Log.w(TAG, "Listen failed.", error);
-                        return;
-                    }
-
-                    List<String> values = new ArrayList<>();
-                    values.add("Food");
-                    values.add("Shopping");
-                    values.add("Transportation");
-                    values.add("Monthly Payment");
-                    for (QueryDocumentSnapshot doc : value) {
-                        if (doc.exists()) {
-                            String categoryValue  = doc.getString("category"); // replace with the actual field name
-                            values.add(categoryValue);
-                        }
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, values);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.categorySpinner.setAdapter(adapter);
-                }
-            });
-
-        binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String selectedItem = parentView.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        binding.categorySpinner.setAdapter(adapter);
         return view;
+    }
+    private void showData() {
+        fStore.collection("Transaction")
+                .document(firebaseAuth.getUid())
+                .collection("Category")
+                .whereEqualTo("type", type) // กรองเฉพาะข้อมูลที่มี type เป็น Income
+                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w(TAG, "Listen failed.", error);
+                            return;
+                        }
+
+                        List<String> values = new ArrayList<>();
+                        if (type != null && type.equals("Income")) {
+                            values.add("Salary");
+                            values.add("Extra");
+                        } else if (type != null && type.equals("Expenses")) {
+                            values.add("Food");
+                            values.add("Shopping");
+                            values.add("Transportation");
+                            values.add("Monthly Payment");
+                        }
+
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc.exists()) {
+                                String categoryValue  = doc.getString("category"); // replace with the actual field name
+                                values.add(categoryValue);
+                            }
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, values);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        binding.categorySpinner.setAdapter(adapter);
+                    }
+                });
     }
 }

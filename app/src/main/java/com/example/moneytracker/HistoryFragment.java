@@ -58,11 +58,10 @@ public class HistoryFragment extends Fragment {
                 .document(firebaseAuth.getUid())
                 .collection("Notes")
                 .orderBy("date", Query.Direction.DESCENDING)
-//                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot ds : task.getResult()) {
+                        for (DocumentSnapshot ds:task.getResult()) {
                             TransactionModel model = new TransactionModel(
                                     ds.getString("id"),
                                     ds.getString("note"),
@@ -71,24 +70,22 @@ public class HistoryFragment extends Fragment {
                                     ds.getString("date"));
 
 
-                            int amount = Integer.parseInt(ds.getString("amount"));
+                            int amount=Integer.parseInt(ds.getString("amount"));
                             if (ds.getString("type").equals("Expenses")) {
                                 sumExpenses = sumExpenses + amount;
-                            } else {
+                            }
+                            else {
                                 sumIncome = sumIncome + amount;
                             }
                             transactionModelArrayList.add(model);
                         }
-
-
                         binding.totalIncomeHistory.setText(String.valueOf(sumIncome));
                         binding.totalExpenseHistory.setText(String.valueOf(sumExpenses));
-                        binding.totalBalanceHistory.setText(String.valueOf(sumIncome - sumExpenses));
+                        binding.totalBalanceHistory.setText(String.valueOf(sumIncome-sumExpenses));
 
-                        transactionAdapter = new TransactionAdapter(getActivity(), transactionModelArrayList);
+                        transactionAdapter = new TransactionAdapter(getActivity(),transactionModelArrayList);
                         binding.historyRecycleView.setAdapter(transactionAdapter);
                     }
-
                 });
 
         Collections.sort(transactionModelArrayList, new Comparator<TransactionModel>() {
