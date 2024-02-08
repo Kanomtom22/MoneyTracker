@@ -56,7 +56,7 @@ public class AddFragment extends Fragment {
     FirebaseFirestore fStore;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    String type="",currentDate, selectedDate, currentTime, selectedTime;
+    String type="",currentDate, selectedDate, currentTime, selectedTime, setDate, setTime;
     ArrayAdapter<String> adapter,incomeAdapter, expensesAdapter;
 
     @Override
@@ -125,7 +125,8 @@ public class AddFragment extends Fragment {
                 transaction.put("note",note);
                 transaction.put("type",type);
                 transaction.put("category", category);
-              //  transaction.put("date", currentDate);
+                transaction.put("date", selectedDate != null ? selectedDate : currentDate);
+                transaction.put("time", selectedTime != null ? selectedTime : currentTime);
                 transaction.put("timestamp", FieldValue.serverTimestamp());
 
                  fStore.collection("Transaction")
@@ -158,6 +159,8 @@ public class AddFragment extends Fragment {
         int date = calendar.get(Calendar.DATE);
         currentDate = date + "/" + (month+1) + "/" + year;
         binding.dateTxt.setText(currentDate);
+        //setDate = selectedDate.toString();
+
         binding.dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +169,7 @@ public class AddFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
                         binding.dateTxt.setText(selectedDate);
+
                     }
                 },year, month, date);
                 datePicker.show();
@@ -177,6 +181,7 @@ public class AddFragment extends Fragment {
         int min = calendar.get(Calendar.MINUTE);
         currentTime = String.format(Locale.getDefault(), "%02d:%02d", hour, min);
         binding.timeTxt.setText(currentTime);
+        //setDate = selectedTime.toString();
 
         binding.timeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +191,7 @@ public class AddFragment extends Fragment {
                     public void onTimeSet(TimePicker view, int hour, int min) {
                         selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hour, min);
                         binding.timeTxt.setText(selectedTime);
+
                     }
                 },hour,min,true);
                 timePicker.show();
