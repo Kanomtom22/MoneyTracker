@@ -2,6 +2,8 @@ package com.example.moneytracker;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,7 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.moneytracker.databinding.FragmentAddBinding;
@@ -50,7 +56,7 @@ public class AddFragment extends Fragment {
     FirebaseFirestore fStore;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    String type="",currentDate;
+    String type="",currentDate, selectedDate, currentTime, selectedTime;
     ArrayAdapter<String> adapter;
     ArrayList<String> spinnerList;
 
@@ -94,20 +100,6 @@ public class AddFragment extends Fragment {
             }
         });
 
-        binding.calendarTransaction.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar selectedDate = Calendar.getInstance();
-                selectedDate.set(year, month, dayOfMonth);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                currentDate = sdf.format(selectedDate.getTime());
-
-            }
-        });
-
-
         binding.saveTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +124,7 @@ public class AddFragment extends Fragment {
                 transaction.put("note",note);
                 transaction.put("type",type);
                 transaction.put("category", category);
-                transaction.put("date", currentDate);
+              //  transaction.put("date", currentDate);
                 transaction.put("timestamp", FieldValue.serverTimestamp());
 
                  fStore.collection("Transaction")
@@ -155,6 +147,60 @@ public class AddFragment extends Fragment {
                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
+            }
+        });
+
+        /* binding.calendarTransaction.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.set(year, month, dayOfMonth);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                currentDate = sdf.format(selectedDate.getTime());
+
+            }
+        });*/
+
+        //Select Date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int date = calendar.get(Calendar.DATE);
+        currentDate = date + "/" + (month+1) + "/" + year;
+        binding.dateTxt.setText(currentDate);
+        binding.dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        binding.dateTxt.setText(selectedDate);
+                    }
+                },year, month, date);
+                datePicker.show();
+            }
+        });
+
+        //Select Time
+        int hour = calendar.get(Calendar.HOUR);
+        int min = calendar.get(Calendar.MINUTE);
+        currentTime = String.format(Locale.getDefault(), "%02d:%02d", hour, min);
+        binding.timeTxt.setText(currentTime);
+
+        binding.timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int min) {
+                        selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hour, min);
+                        binding.timeTxt.setText(selectedTime);
+                    }
+                },hour,min,true);
+                timePicker.show();
             }
         });
 
