@@ -32,9 +32,10 @@
     <string name="EXPENSES">EXPENSES</string>
     <string name="BALANCE">BALANCE</string>
 
+    <string name="English">English</string>
+    <string name="Thai">Thai</string>
+
     <string name="bath">฿</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="category_spinner">
         <item>Food</item>

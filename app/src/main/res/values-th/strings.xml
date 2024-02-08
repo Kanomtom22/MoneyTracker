@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">MONEY TRACKER</string>
+    <string name="title_home">หน้าแรก</string>
+    <string name="title_dashboard">กราฟรายงานผล</string>
+    <string name="title_history">ประวัติ</string>
+    <string name="title_setting">ตั้งค่า</string>
+    <string name="title_add">Add</string>
+    <string name="DASHBOARD">กราฟรายงานผล</string>
+    <string name="HISTORY">ประวัติการทำรายการ</string>
+    <string name="SETTING">การตั้งค่า</string>
+    <string name="ADD">เพิ่มรายการ</string>
+    <string name="CANCEL">ยกเลิก</string>
+    <string name="SAVE">บันทึก</string>
+    <string name="SIGNUP">ลงชื่อเข้าใช้</string>
+
+    <string name="Account">บัญชี</string>
+    <string name="Categories">ประเภทธุรกรรม</string>
+    <string name="Languages">ภาษา</string>
+    <string name="Logout">ออกจากระบบ</string>
+
+    <string name="NOVEMBER">พฤศจิกายน</string>
+    <string name="nov">พ.ย.</string>
+    <string name="total_baht">฿ 4,836</string>
+    <string name="total_income">฿ 5,000</string>
+    <string name="total_expenses">฿ 164</string>
+
+    <string name="total_balance">คงเหลือ</string>
+    <string name="income">รายรับ</string>
+    <string name="expenses">รายจ่าย</string>
+    <string name="INCOME">รายรับ</string>
+    <string name="TOTAL">รวมทั้งหมด</string>
+    <string name="EXPENSES">รายจ่าย</string>
+    <string name="BALANCE">คงเหลือ</string>
+
+    <string name="English">ภาษาอังกฤษ</string>
+    <string name="Thai">ภาษาไทย</string>
+
+    <string name="bath">฿</string>
+
+    <string-array name="category_spinner">
+        <item>ค่าอาหาร</item>
+        <item>ค่าของใช้</item>
+        <item>ค่าช้อปปิ้ง</item>
+        <item>ค่าเดินทาง</item>
+        <item>ค่ารายจ่ายต่อเดือน</item>
+        <item>ค่าท่องเที่ยว</item>
+    </string-array>
+
+
+</resources>

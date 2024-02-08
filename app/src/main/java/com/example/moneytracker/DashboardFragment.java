@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -139,15 +140,35 @@ public class DashboardFragment extends Fragment {
                     }
                 });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                AlertDialog.Builder adb = new AlertDialog.Builder(
-//                        DashboardFragment.this);
-//                adb.setTitle("Lists of transaction");
-//                adb.show();
-//            }
-//        });
+        listView.setOnItemClickListener(((parent, view, position, id) -> {
+            String selectedCategory = categoryList.get(position);
+
+            firebaseFirestore.collection("Transaction")
+                    .document(firebaseAuth.getCurrentUser().getUid())
+                    .collection("Notes")
+                    .whereEqualTo("category", selectedCategory)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+
+                        StringBuilder dialogMessage = new StringBuilder();
+
+                        for (DocumentSnapshot document : documents) {
+                            String note = document.getString("note");
+                            String amountString = document.getString("amount");
+                            int amount = Integer.parseInt(amountString);
+
+                            dialogMessage.append("- ").append(note).append(": ฿").append(amount).append("\n");
+                        }
+
+                        AlertDialog.Builder adb = new AlertDialog.Builder(requireContext());
+                        adb.setTitle("Lists of transactions");
+                        adb.setMessage(dialogMessage.toString());
+                        adb.show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(requireContext(), "Failed to load transactions", Toast.LENGTH_SHORT).show();
+                    });
+        }));
     }
 }

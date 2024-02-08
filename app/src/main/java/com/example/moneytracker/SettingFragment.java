@@ -44,6 +44,13 @@ public class SettingFragment extends Fragment {
 //                startActivity(intent);
 //            }
 //        });
+        binding.languagesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LanguagesActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
 
