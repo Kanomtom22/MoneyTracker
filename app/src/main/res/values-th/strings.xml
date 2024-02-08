@@ -17,9 +17,16 @@
     <string name="Categories">ประเภทธุรกรรม</string>
     <string name="Languages">ภาษา</string>
     <string name="Logout">ออกจากระบบ</string>
+    <string name="Note">จดบันทึก</string>
+
+    <string name="selectDate">เลือกวันที่</string>
+    <string name="selectTime">เลือกเวลา</string>
+
 
     <string name="NOVEMBER">พฤศจิกายน</string>
-    <string name="nov">พ.ย.</string>
+    <string name="nov">พฤศจิกายน</string>
+
+
     <string name="total_baht">฿ 4,836</string>
     <string name="total_income">฿ 5,000</string>
     <string name="total_expenses">฿ 164</string>

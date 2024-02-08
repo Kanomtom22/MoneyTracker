@@ -91,7 +91,7 @@
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="@string/total_baht"
+                            android:text="฿ xxxx"
                             android:textColor="@color/yellow"
                             android:textSize="40dp"
                             android:textStyle="bold" />
@@ -138,7 +138,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/total_income"
+                            android:text="฿ xxxx"
                             android:textColor="@color/white"
                             android:textSize="25dp"
                             android:textStyle="bold" />
@@ -181,7 +181,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/total_income"
+                            android:text="฿ xxxx"
                             android:textColor="@color/white"
                             android:textSize="25dp"
                             android:textStyle="bold" />

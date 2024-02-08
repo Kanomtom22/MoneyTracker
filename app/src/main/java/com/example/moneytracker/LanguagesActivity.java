@@ -54,4 +54,9 @@ public class LanguagesActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
+    protected void onResume() {
+        super.onResume();
+//        updateNavigationBarLanguage();
+    }
 }

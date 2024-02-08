@@ -31,6 +31,10 @@
     <string name="TOTAL">TOTAL</string>
     <string name="EXPENSES">EXPENSES</string>
     <string name="BALANCE">BALANCE</string>
+    <string name="Note">Note</string>
+
+    <string name="selectDate">select date</string>
+    <string name="selectTime">select time</string>
 
     <string name="English">English</string>
     <string name="Thai">Thai</string>

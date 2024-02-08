@@ -69,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    private void updateNavigationBarLanguage() {
+        String titleHome = getString(R.string.title_home);
+        String titleDashboard = getString(R.string.title_dashboard);
+        String titleHistory = getString(R.string.title_history);
+        String titleSetting = getString(R.string.title_setting);
+
+
+    }
+
+
     public void addNew(View view) {
         replaceFragment(new AddFragment());
     }
