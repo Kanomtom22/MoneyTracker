@@ -1,16 +1,20 @@
 package com.example.moneytracker;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -78,12 +82,28 @@ public class DashboardFragment extends Fragment {
                         }
 
                         PieDataSet dataSet = new PieDataSet(entries, "Category");
-                        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+                        ArrayList<Integer> colors = new ArrayList<>();
+                        colors.add(ContextCompat.getColor(requireContext(), R.color.yellow));
+                        colors.add(ContextCompat.getColor(requireContext(), R.color.sky));
+                        colors.add(ContextCompat.getColor(requireContext(), R.color.pink));
+                        colors.add(ContextCompat.getColor(requireContext(), R.color.purple));
+                        colors.add(ContextCompat.getColor(requireContext(), R.color.softGreen));
+
+                        dataSet.setColors(colors);
                         PieData pieData = new PieData(dataSet);
+
+                        dataSet.setDrawIcons(false);
+                        dataSet.setValueTextSize(15f);
+                        dataSet.setValueTextColor(R.color.white);
+
 
                         pieChart.getDescription().setEnabled(false);
                         pieChart.setData(pieData);
                         pieChart.invalidate();
+
+                        Legend legend = pieChart.getLegend();
+                        legend.setWordWrapEnabled(true);
                     } else {
 
                     }
@@ -118,5 +138,16 @@ public class DashboardFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 });
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                AlertDialog.Builder adb = new AlertDialog.Builder(
+//                        DashboardFragment.this);
+//                adb.setTitle("Lists of transaction");
+//                adb.show();
+//            }
+//        });
     }
 }
