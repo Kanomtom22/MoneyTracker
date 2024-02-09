@@ -215,6 +215,7 @@ public class AddFragment extends Fragment {
                         }
 
                         List<String> values = new ArrayList<>();
+
                         if (type != null && type.equals("Income")) {
                             values.add("Salary");
                             values.add("Extra");
@@ -224,7 +225,6 @@ public class AddFragment extends Fragment {
                             values.add("Transportation");
                             values.add("Monthly Payment");
                         }
-
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc.exists()) {
                                 String categoryValue  = doc.getString("category"); // replace with the actual field name

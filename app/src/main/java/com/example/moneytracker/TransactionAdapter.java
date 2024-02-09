@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,13 @@ import java.util.ArrayList;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder>{
     Context context;
     ArrayList<TransactionModel> transactionModelArrayList;
-
+    private OnItemClickListener listener;
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener clickListener) {
+        listener = clickListener;
+    }
     public TransactionAdapter(Context context, ArrayList<TransactionModel> transactionModelArrayList) {
         this.context = context;
         this.transactionModelArrayList = transactionModelArrayList;
@@ -26,7 +33,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_recycler_item,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, listener);
     }
 
     @Override
@@ -53,12 +60,21 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView note,amount,date,bath;
-        public MyViewHolder(@NonNull View itemView) {
+        ImageView delBtn;
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
             note = itemView.findViewById(R.id.note_one);
             amount = itemView.findViewById(R.id.amount_one);
             date = itemView.findViewById(R.id.date_one);
             bath = itemView.findViewById(R.id.bath);
+            delBtn = itemView.findViewById(R.id.delBtn);
+
+            delBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(getAdapterPosition());
+                }
+            });
 
         }
     }
